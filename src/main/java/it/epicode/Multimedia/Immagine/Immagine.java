@@ -1,0 +1,27 @@
+package it.epicode.Multimedia.Immagine;
+
+
+import it.epicode.Multimedia.ElementoMultimediale.ElementoMultimediale;
+import lombok.Data;
+
+@Data
+public class Immagine extends ElementoMultimediale {
+    private int luminosita;
+
+    public Immagine(String titolo, int luminosita) {
+        super(titolo);
+        this.luminosita = luminosita;
+    }
+
+    public void aumentaLuminosita() {
+        luminosita++;
+    }
+
+    public void diminuisciLuminosita() {
+        if (luminosita > 0) luminosita--;
+    }
+
+    public void show() {
+        System.out.println(titolo + " " + "*".repeat(luminosita));
+    }
+}
