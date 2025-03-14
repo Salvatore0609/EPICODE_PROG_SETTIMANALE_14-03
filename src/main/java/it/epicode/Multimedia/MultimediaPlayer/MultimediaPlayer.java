@@ -48,10 +48,27 @@ public class MultimediaPlayer {
                     System.out.println("Tipo non valido, riprova.");
                     i--;
             }
+
+            // Debug: Stampa l'elemento aggiunto
+            System.out.println("Elemento " + (i + 1) + ": " + titolo + " aggiunto!");
         }
 
-        // Esecuzione degli elementi
+        // Debug: Stampa gli oggetti creati
+        System.out.println("Gli elementi creati sono:");
+        for (int i = 0; i < 5; i++) {
+            if (elementi[i] != null) {
+                System.out.println("Elemento " + (i + 1) + ": " + elementi[i].getTitolo());
+            }
+        }
+
+        // Esecuzione degli elementi con opzioni di modifica
         while (true) {
+            // Solo se l'array è stato riempito correttamente
+            if (elementi[0] == null) {
+                System.out.println("Nessun elemento creato, uscita.");
+                break;
+            }
+
             System.out.println("Scegli un elemento da eseguire (1-5) o 0 per uscire:");
             int scelta = scanner.nextInt();
             if (scelta == 0) break;
@@ -61,10 +78,56 @@ public class MultimediaPlayer {
             }
 
             ElementoMultimediale elemento = elementi[scelta - 1];
-            if (elemento instanceof Immagine) {
-                ((Immagine) elemento).show();
-            } else if (elemento instanceof Riproducibile) {
-                ((Riproducibile) elemento).play();
+
+            while (true) {
+                System.out.println("Cosa vuoi fare?");
+                System.out.println("1 - Eseguire");
+                if (elemento instanceof Video || elemento instanceof RegistrazioneAudio) {
+                    System.out.println("2 - Alzare il volume");
+                    System.out.println("3 - Abbassare il volume");
+                }
+                if (elemento instanceof Video || elemento instanceof Immagine) {
+                    System.out.println("4 - Aumentare la luminosità");
+                    System.out.println("5 - Diminuire la luminosità");
+                }
+                System.out.println("0 - Tornare indietro");
+
+                int azione = scanner.nextInt();
+                if (azione == 0) break;
+
+                if (azione == 1) {
+                    if (elemento instanceof Immagine) {
+                        ((Immagine) elemento).show();
+                    } else if (elemento instanceof Riproducibile) {
+                        ((Riproducibile) elemento).play();
+                    }
+                } else if (azione == 2 && elemento instanceof RegistrazioneAudio) {
+                    ((RegistrazioneAudio) elemento).alzaVolume();
+                    System.out.println("Volume aumentato!");
+                } else if (azione == 3 && elemento instanceof RegistrazioneAudio) {
+                    ((RegistrazioneAudio) elemento).abbassaVolume();
+                    System.out.println("Volume abbassato!");
+                } else if (azione == 2 && elemento instanceof Video) {
+                    ((Video) elemento).alzaVolume();
+                    System.out.println("Volume aumentato!");
+                } else if (azione == 3 && elemento instanceof Video) {
+                    ((Video) elemento).abbassaVolume();
+                    System.out.println("Volume abbassato!");
+                } else if (azione == 4 && elemento instanceof Video) {
+                    ((Video) elemento).aumentaLuminosita();
+                    System.out.println("Luminosità aumentata!");
+                } else if (azione == 5 && elemento instanceof Video) {
+                    ((Video) elemento).diminuisciLuminosita();
+                    System.out.println("Luminosità diminuita!");
+                } else if (azione == 4 && elemento instanceof Immagine) {
+                    ((Immagine) elemento).aumentaLuminosita();
+                    System.out.println("Luminosità aumentata!");
+                } else if (azione == 5 && elemento instanceof Immagine) {
+                    ((Immagine) elemento).diminuisciLuminosita();
+                    System.out.println("Luminosità diminuita!");
+                } else {
+                    System.out.println("Azione non valida.");
+                }
             }
         }
 
